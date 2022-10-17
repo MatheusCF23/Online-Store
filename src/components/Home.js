@@ -54,7 +54,7 @@ export default class Home extends Component {
 
   render() {
     const { categories, products, query } = this.state;
-    const { addToCart } = this.props;
+    const { addToCart, cart } = this.props;
     return (
       <>
         { this.iniciaLocal() }
@@ -63,7 +63,7 @@ export default class Home extends Component {
           handleChange={ this.handleChange }
           getProducts={ this.getProducts }
         />
-        <CartButton />
+        <CartButton cart={ cart } />
         <div>
           {
             categories.length > 0
@@ -102,4 +102,5 @@ export default class Home extends Component {
 
 Home.propTypes = {
   addToCart: PropTypes.func.isRequired,
+  cart: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };

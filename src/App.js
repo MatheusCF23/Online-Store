@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 import Details from './components/Details';
 import Home from './components/Home';
 
@@ -46,6 +47,10 @@ export default class App extends Component {
     }), this.addToLocal);
   };
 
+  checkoutClear = () => {
+    this.setState({ cart: [] }, this.addToLocal);
+  };
+
   render() {
     const { cart } = this.state;
     // console.log(cart);
@@ -57,6 +62,7 @@ export default class App extends Component {
             path="/"
             render={ () => (<Home
               addToCart={ this.addToCart }
+              cart={ cart }
             />) }
           />
           <Route
@@ -73,6 +79,15 @@ export default class App extends Component {
             render={ (props) => (<Details
               { ...props }
               addToCart={ this.addToCart }
+              cart={ cart }
+            />) }
+          />
+          <Route
+            path="/checkout"
+            render={ (props) => (<Checkout
+              { ...props }
+              cart={ cart }
+              checkoutClear={ this.checkoutClear }
             />) }
           />
         </Switch>

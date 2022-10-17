@@ -39,6 +39,7 @@ export default class CartItem extends Component {
             type="button"
             data-testid="product-increase-quantity"
             onClick={ () => addToCart(item) }
+            disabled={ counter >= item.available_quantity }
           >
             +
           </button>

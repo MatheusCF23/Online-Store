@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
+import CheckoutButton from './CheckoutButton';
 
 export default class Cart extends Component {
   constructor() {
@@ -31,22 +32,13 @@ export default class Cart extends Component {
     return total;
   };
 
-  // removeItem = (id) => {
-  //   const list = this.getFromLocal();
-  //   const newList = list.filter((item) => item.id !== id);
-  //   console.log(newList);
-  //   localStorage.setItem('cartItems', JSON.stringify(newList));
-  // };
-
   filterCart = () => {
-    // const { cart } = this.props;
     const { list } = this.state;
 
     const ids = list.map((product) => product.id);
     const newList = list.filter(({ id }, index) => !ids.includes(id, index + 1));
 
     console.log(list, newList);
-    // console.log(cart);
     return newList;
   };
 
@@ -62,22 +54,21 @@ export default class Cart extends Component {
         <h1> Carrinho </h1>
         { list.length > 0
           ? this.filterCart()
-            .map((obj, index) => (
+            .map((item, index) => (
               <CartItem
                 key={ index }
-                id={ obj.id }
-                price={ obj.price }
-                title={ obj.title }
-                thumbnail={ obj.thumbnail }
-                counter={ this.countItem(obj.id) }
-                // getFromLocal={ this.getFromLocal }
-                // removeItem={ this.removeItem }
+                id={ item.id }
+                price={ item.price }
+                title={ item.title }
+                thumbnail={ item.thumbnail }
+                counter={ this.countItem(item.id) }
                 removeAllFromCart={ removeAllFromCart }
                 addToCart={ addToCart }
-                item={ obj }
+                item={ item }
                 removeItemFromCart={ removeItemFromCart }
               />))
           : <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>}
+        <CheckoutButton />
       </>
     );
   }
